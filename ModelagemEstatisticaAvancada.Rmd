@@ -31,33 +31,25 @@ knitr::opts_chunk$set(echo = TRUE)
 #### Resumo mtcats, variável  resposta "hp"
 ```{r}
 df_mtcars = data.frame(mtcars)
-print("Summary")
 summary(df_mtcars)
-print("Cor")
 cor(df_mtcars)
 ```
 #### Resumo LifeCycleSavings, variável  resposta "sr"
 ```{r}
 df_LifeCycleSavings =data.frame(LifeCycleSavings)
-print("Summary")
 summary(df_LifeCycleSavings)
-print("Cor")
 cor(df_LifeCycleSavings)
 ```
 #### Resumo quakes, variável  resposta "mag"
 ```{r}
 df_quakes =data.frame(quakes)
-print("Summary")
 summary(df_quakes)
-print("Cor")
 cor(df_quakes)
 ```
 #### Resumo swiss, variável  resposta "fertility"
 ```{r}
 df_swiss =data.frame(swiss)
-print("Summary")
 summary(df_swiss)
-print("Cor")
 cor(df_swiss)
 ```
 
@@ -65,9 +57,7 @@ cor(df_swiss)
 
 ```{r}
 df_trees =data.frame(trees)
-print("Summary")
 summary(df_trees)
-print("Cor")
 cor(df_trees)
 ```
 ### Comentário Americo: Me baseando pelos resumos acima, escolhi mtcars, quakes e swiss
