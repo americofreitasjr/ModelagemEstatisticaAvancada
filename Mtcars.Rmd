@@ -37,6 +37,7 @@ mod2=step(mod, direction = "backward")
 summary(mod2)
 
 ```
+### Aparentemente, o melhor modelo linear possível é: 0,516disp; -28,592wt; 23,576carb;
 ### Vamos seguir com este modelo, agora é ver se os pressupostos estão sendo atendidos
 ```{r}
 mod = lm(formula = hp ~ disp + wt + carb, data = df)
@@ -78,7 +79,9 @@ bptest(mod)
 ```{r}
 dwtest(mod)
 ```
-### Até aqui o modelo parece válido 
+### Até aqui parece que chegamos no melhor ajuste, e não foram necessárias transformações para melhorar o ajuste. E até aqui, todos os pressupostos foram atendidos utilizando os testes formais.
+
+## Previsões e intervalos de confiança
 
 ```{r}
 pred_in = data.frame(disp = 159.0, wt = 2.220, carb = 3)

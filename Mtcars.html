@@ -566,6 +566,10 @@ summary(mod)</code></pre>
 ## Multiple R-squared:  0.8863, Adjusted R-squared:  0.8742 
 ## F-statistic: 72.78 on 3 and 28 DF,  p-value: 2.462e-13</code></pre>
 </div>
+<div id="aparentemente-o-melhor-modelo-linear-possível-é-0516disp--28592wt-23576carb" class="section level3">
+<h3>Aparentemente, o melhor modelo linear possível é: 0,516disp;
+-28,592wt; 23,576carb;</h3>
+</div>
 <div id="vamos-seguir-com-este-modelo-agora-é-ver-se-os-pressupostos-estão-sendo-atendidos" class="section level3">
 <h3>Vamos seguir com este modelo, agora é ver se os pressupostos estão
 sendo atendidos</h3>
@@ -654,13 +658,18 @@ indica que o pressuposto de autocorrelação foi atendido</h3>
 ## DW = 1.9832, p-value = 0.3739
 ## alternative hypothesis: true autocorrelation is greater than 0</code></pre>
 </div>
-<div id="até-aqui-o-modelo-parece-válido" class="section level3">
-<h3>Até aqui o modelo parece válido</h3>
+<div id="até-aqui-parece-que-chegamos-no-melhor-ajuste-e-não-foram-necessárias-transformações-para-melhorar-o-ajuste.-e-até-aqui-todos-os-pressupostos-foram-atendidos-utilizando-os-testes-formais." class="section level3">
+<h3>Até aqui parece que chegamos no melhor ajuste, e não foram
+necessárias transformações para melhorar o ajuste. E até aqui, todos os
+pressupostos foram atendidos utilizando os testes formais.</h3>
+</div>
+</div>
+<div id="previsões-e-intervalos-de-confiança" class="section level2">
+<h2>Previsões e intervalos de confiança</h2>
 <pre class="r"><code>pred_in = data.frame(disp = 159.0, wt = 2.220, carb = 3)
 predict(mod, pred_in, interval=&quot;confidence&quot;)</code></pre>
 <pre><code>##        fit     lwr      upr
 ## 1 142.5679 127.453 157.6827</code></pre>
-</div>
 </div>
 
 
