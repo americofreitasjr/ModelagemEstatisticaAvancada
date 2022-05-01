@@ -8,6 +8,11 @@ output: html_document
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 ```
+## Verificando a correlação entre as variáveis
+
+### Em primeira análise hp está correlacionada com: mpg, cyl, disp, qsec, vs, carb
+
+### Eu reparei diversos problemas de multicolinearidade entre as variáveis explicativas
 
 
 ```{r}
@@ -16,25 +21,29 @@ df = data.frame(mtcars)
 cor(df)
 
 ```
+## Modelo linear por todas as variáveis
 
+### Apenas disp e carb influenciam no modelo em 0.8565
 ```{r}
 
 mod = lm(hp ~ ., data=df)
 summary(mod)
 
 ```
-
+### Repare que incluindo o wt (hp ~ disp + wt + carb) o modelo melhora (0.8742)
 ```{r}
 
 mod2=step(mod, direction = "backward")
 summary(mod2)
 
 ```
-
+### Vamos seguir com este modelo, agora é ver se os pressupostos estão sendo atendidos
 ```{r}
 mod = lm(formula = hp ~ disp + wt + carb, data = df)
 summary(mod)
 ```
+## Teste de normalidade
+
 ### Por análise visual, a normalidade dos resíduos parece ser satisfatória. 
 
 ```{r}
@@ -48,6 +57,8 @@ qqline(anares)
 library(nortest)
 ad.test(anares)
 ```
+## Teste de homocedasticidade
+
 ### Por avaliação visual, o modelo atender ao pressuposto da homocedásticidade
 
 ```{r}
@@ -61,10 +72,14 @@ library(zoo)
 library(lmtest)
 bptest(mod)
 ```
+## Teste de autocorrelação
+
 ### O teste formal de autocorrelação (Durbin-Watson) 0,3739 maior que 5% indica que o pressuposto de autocorrelação foi atendido
 ```{r}
 dwtest(mod)
 ```
+### Até aqui o modelo parece válido 
+
 ```{r}
 pred_in = data.frame(disp = 159.0, wt = 2.220, carb = 3)
 predict(mod, pred_in, interval="confidence")
