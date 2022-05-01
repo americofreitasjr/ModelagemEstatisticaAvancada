@@ -2,8 +2,9 @@
 
 # TRABALHO DE MODELAGEM ESTATÍSTICA AVANÇADA([PDF de Instruções](https://github.com/americofreitasjr/ModelagemEstatisticaAvancada/blob/main/Trabalho%20Modelagem%20Estat%C3%ADstica%20Avan%C3%A7ada.pdf))
 
-## Professor: Paulo Maranhão
-## Prazo: 08/05/2022
+**Professor: Paulo Maranhão** 
+
+**Prazo: 08/05/2022** 
 
 **Questão 1:** Seguem abaixo cinco bases de dados que se encontram do próprio R onde cada variável resposta encontra-se entre parêntesis. Cada grupo ou cada aluno deve escolher três base de dados. Para cada base de dados deve ser feito uma análise estatística conforme a teoria da disciplina de Modelagem Estatística Avançada. Cada análise deve responder os seguintes itens:
 
