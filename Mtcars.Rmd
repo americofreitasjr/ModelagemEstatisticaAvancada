@@ -1,0 +1,72 @@
+---
+title: "mtcars"
+author: "Americo Freitas"
+date: '2022-04-30'
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+```{r}
+
+df = data.frame(mtcars)
+cor(df)
+
+```
+
+```{r}
+
+mod = lm(hp ~ ., data=df)
+summary(mod)
+
+```
+
+```{r}
+
+mod2=step(mod, direction = "backward")
+summary(mod2)
+
+```
+
+```{r}
+mod = lm(formula = hp ~ disp + wt + carb, data = df)
+summary(mod)
+```
+### Por análise visual, a normalidade dos resíduos parece ser satisfatória. 
+
+```{r}
+anares=rstandard(mod)
+qqnorm(anares, ylab="Residuos", xlab="Quantis", main="QQPlot")
+qqline(anares)
+```
+### No teste formal de Normalidade (Anderson-Darling) indica 0.288, ou seja, maior que 5%, indicando que o presuposto de normalidade foi atendido.
+
+```{r}
+library(nortest)
+ad.test(anares)
+```
+### Por avaliação visual, o modelo atender ao pressuposto da homocedásticidade
+
+```{r}
+fit=fitted.values(mod) 
+plot(fit, anares, ylab="Residuos", xlab="Valores Ajustados", main="Homocedasticidade")
+abline(0,0)
+```
+### O teste formal (Breusch-Pagan) 0,09634 indica que os resíduos atendem ao presuposto de homocedasticidade foi atendido por ser maior que 5%
+```{r}
+library(zoo)
+library(lmtest)
+bptest(mod)
+```
+### O teste formal de autocorrelação (Durbin-Watson) 0,3739 maior que 5% indica que o pressuposto de autocorrelação foi atendido
+```{r}
+dwtest(mod)
+```
+```{r}
+pred_in = data.frame(disp = 159.0, wt = 2.220, carb = 3)
+predict(mod, pred_in, interval="confidence")
+```
+
