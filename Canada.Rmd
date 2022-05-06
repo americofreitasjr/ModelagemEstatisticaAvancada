@@ -1,0 +1,82 @@
+---
+title: "Canada"
+author: "Americo Freitas"
+date: '2022-05-04'
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+## R Markdown
+
+```{r}
+xlsfile <- file.path('/cloud/project','Canada.xlsx')
+df <- read_xlsx(xlsfile)
+df$...1 <- NULL
+```
+
+
+```{r}
+summary(df)
+```
+
+```{r}
+cor(df)
+
+```
+
+
+```{r}
+mod = lm(PROD ~ ., data=df)
+summary(mod)
+```
+Para tentar melhorar o ajuste eu retirei as seguintes variaveis:
+
+EXGR_FNL
+EXGR_INT
+EXGR_DVA
+EXGR_DDC
+EXGR_IDC
+EXGR_RIM
+EXGR_FVA
+IMGR
+IMGR_FNL
+IMGR_INT
+IMGR_DVA
+BALGR
+REII
+PROD
+VALU
+FFD_DVA
+DFD_FVA
+BALVAFD
+FD_VA
+CONS_VA
+GFCF_VA
+EXGR_DVASH
+EXGR_FVASH
+EXGR_DVAFXSH
+EXGR_FNLDVASH
+EXGR_INTDVASH
+EXGR_INTDVAPSH
+
+
+
+```{r}
+mod = lm(log(PROD) ~ BALGR+REII+PROD+VALU+FFD_DVA+DFD_FVA+BALVAFD+FD_VA+CONS_VA+GFCF_VA+EXGRPSH+EXGR_DVAPSH+EXGR_TDVAIND+EXGR_TFVAIND+EXGR_SERV_DVASH+EXGR_SERV_FVASH+IMGRINT_REII+IMGR_DVASH+IMGRPSH+FFD_DVAPSH+DFD_FVAPSH+VALU_FFDDVA+PROD_VASH+FD_VASH+CONS_VASH+GFCF_VASH+DEXFVAPSH+FEXDVAPSH, data=df)
+summary(mod)
+```
+
+
+```{r}
+mod2=step(mod, direction = "backward")
+summary(mod2)
+```
+O modelo linear melhorou significativamente
+
+```{r}
+mod = lm(log(PROD ~ BALGR + REII + PROD + VALU + FFD_DVA + DFD_FVA + CONS_VA + EXGR_TDVAIND + EXGR_SERV_DVASH + 
+           EXGR_SERV_FVASH + VALU_FFDDVA + PROD_VASH + DEXFVAPSH + FEXDVAPSH,data=df)
+summary(mod)
+```
