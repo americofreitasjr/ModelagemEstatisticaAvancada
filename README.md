@@ -30,7 +30,7 @@
 
 **Questão 2:** Imagine que uma empresa de determinado país quer fazer um estudo sobre a produção bruta do país. Para isso resolveu utilizar a base de dados da Organização para a Cooperação e Desenvolvimento Econômico (OECD) cujos dados podem ser encontrados no seguinte sítio:
 
-**([Início do ajuste](http://htmlpreview.github.io/?https://github.com/americofreitasjr/ModelagemEstatisticaAvancada/blob/main/Canada.html)).**
+**([Ajuste do Modelo](http://htmlpreview.github.io/?https://github.com/americofreitasjr/ModelagemEstatisticaAvancada/blob/main/Canada.html)).**
 
 https://stats.oecd.org/Index.aspx?DataSetCode=IO_GHG_2021#
 
