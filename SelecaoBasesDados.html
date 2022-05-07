@@ -370,55 +370,12 @@ pre code {
 </div>
 
 
-<div id="trabalho-de-modelagem-estatística-avançada" class="section level1">
-<h1>TRABALHO DE MODELAGEM ESTATÍSTICA AVANÇADA</h1>
-<div id="professor-paulo-maranhão" class="section level2">
-<h2>Professor: Paulo Maranhão</h2>
-</div>
-<div id="prazo-08052022" class="section level2">
-<h2>Prazo: 08/05/2022</h2>
-</div>
-<div id="questão-1-seguem-abaixo-cinco-bases-de-dados-que-se-encontram-do-próprio-r-onde-cada-variável-resposta-encontra-se-entre-parêntesis.-cada-grupo-ou-cada-aluno-deve-escolher-três-base-de-dados.-para-cada-base-de-dados-deve-ser-feito-uma-análise-estatística-conforme-a-teoria-da-disciplina-de-modelagem-estatística-avançada.-cada-análise-deve-responder-os-seguintes-itens" class="section level2">
-<h2>Questão 1: Seguem abaixo cinco bases de dados que se encontram do
-próprio R onde cada variável resposta encontra-se entre parêntesis. Cada
-grupo ou cada aluno deve escolher três base de dados. Para cada base de
-dados deve ser feito uma análise estatística conforme a teoria da
-disciplina de Modelagem Estatística Avançada. Cada análise deve
-responder os seguintes itens:</h2>
-<div id="a-usando-o-r-determine-o-melhor-modelo-linear-possível-para-a-estimar-o-valor-médio-de-cada-variável-resposta.-proponha-quaisquer-transformações-que-achar-necessário-para-melhorar-o-ajuste-do-modelo." class="section level3">
-<h3>a) Usando o R determine o melhor modelo linear possível para a
-estimar o valor médio de cada variável resposta. Proponha quaisquer
-transformações que achar necessário para melhorar o ajuste do
-modelo.</h3>
-</div>
-<div id="b-os-pressupostos-dos-modelos-foram-atendidos-apresente-os-resultados-graficamente-e-analiticamente-testes-formais-comprovando-se-as-suposições-foram-satisfeitas." class="section level3">
-<h3>b) Os pressupostos dos modelos foram atendidos? Apresente os
-resultados graficamente e analiticamente (testes formais) comprovando se
-as suposições foram satisfeitas.</h3>
-</div>
-<div id="c-utilize-uma-parte-dos-dados-para-gerar-previsões-e-intervalos-de-confiança.-é-possível-dizer-que-o-modelo-foi-bem-ajustado" class="section level3">
-<h3>c) Utilize uma parte dos dados para gerar previsões e intervalos de
-confiança. É possível dizer que o modelo foi bem ajustado?</h3>
-</div>
-</div>
-<div id="bases-de-dados" class="section level2">
-<h2>Bases de Dados:</h2>
-<div id="mtcars-hp" class="section level3">
-<h3>* mtcars (hp)</h3>
-</div>
-<div id="lifecyclesavings-sr" class="section level3">
-<h3>* LifeCycleSavings (sr)</h3>
-</div>
-<div id="quakes-mag" class="section level3">
-<h3>* quakes (mag)</h3>
-</div>
-<div id="swiss-fertility" class="section level3">
-<h3>* swiss (fertility)</h3>
-</div>
-<div id="trees-volume" class="section level3">
-<h3>* trees (volume)</h3>
-<div id="resumo-mtcats-variável-resposta-hp" class="section level4">
-<h4>Resumo mtcats, variável resposta “hp”</h4>
+<div id="seleção-das-bases-de-dados" class="section level2">
+<h2>Seleção das bases de dados</h2>
+<p>Bases de Dados: * mtcars (hp) * LifeCycleSavings (sr) * quakes (mag)
+* swiss (fertility) * trees (volume)</p>
+<div id="resumo-mtcats-variável-resposta-hp" class="section level3">
+<h3>Resumo mtcats, variável resposta “hp”</h3>
 <pre class="r"><code>df_mtcars = data.frame(mtcars)
 summary(df_mtcars)</code></pre>
 <pre><code>##       mpg             cyl             disp             hp       
@@ -468,8 +425,8 @@ summary(df_mtcars)</code></pre>
 ## gear -0.21268223  0.2060233  0.79405876  1.0000000  0.27407284
 ## carb -0.65624923 -0.5696071  0.05753435  0.2740728  1.00000000</code></pre>
 </div>
-<div id="resumo-lifecyclesavings-variável-resposta-sr" class="section level4">
-<h4>Resumo LifeCycleSavings, variável resposta “sr”</h4>
+<div id="resumo-lifecyclesavings-variável-resposta-sr" class="section level3">
+<h3>Resumo LifeCycleSavings, variável resposta “sr”</h3>
 <pre class="r"><code>df_LifeCycleSavings =data.frame(LifeCycleSavings)
 summary(df_LifeCycleSavings)</code></pre>
 <pre><code>##        sr             pop15           pop75            dpi         
@@ -494,8 +451,8 @@ summary(df_LifeCycleSavings)</code></pre>
 ## dpi    0.2203589 -0.75618810  0.78699951  1.0000000 -0.12948552
 ## ddpi   0.3047872 -0.04782569  0.02532138 -0.1294855  1.00000000</code></pre>
 </div>
-<div id="resumo-quakes-variável-resposta-mag" class="section level4">
-<h4>Resumo quakes, variável resposta “mag”</h4>
+<div id="resumo-quakes-variável-resposta-mag" class="section level3">
+<h3>Resumo quakes, variável resposta “mag”</h3>
 <pre class="r"><code>df_quakes =data.frame(quakes)
 summary(df_quakes)</code></pre>
 <pre><code>##       lat              long           depth            mag      
@@ -520,8 +477,8 @@ summary(df_quakes)</code></pre>
 ## mag      -0.050461651 -0.17306726 -0.23063770  1.00000000  0.851182422
 ## stations -0.002220645 -0.05351246 -0.07351510  0.85118242  1.000000000</code></pre>
 </div>
-<div id="resumo-swiss-variável-resposta-fertility" class="section level4">
-<h4>Resumo swiss, variável resposta “fertility”</h4>
+<div id="resumo-swiss-variável-resposta-fertility" class="section level3">
+<h3>Resumo swiss, variável resposta “fertility”</h3>
 <pre class="r"><code>df_swiss =data.frame(swiss)
 summary(df_swiss)</code></pre>
 <pre><code>##    Fertility      Agriculture     Examination      Education    
@@ -554,8 +511,8 @@ summary(df_swiss)</code></pre>
 ## Catholic               0.17549591
 ## Infant.Mortality       1.00000000</code></pre>
 </div>
-<div id="resumo-trees-variável-resposta-volume" class="section level4">
-<h4>Resumo trees, variável resposta “volume”</h4>
+<div id="resumo-trees-variável-resposta-volume" class="section level3">
+<h3>Resumo trees, variável resposta “volume”</h3>
 <pre class="r"><code>df_trees =data.frame(trees)
 summary(df_trees)</code></pre>
 <pre><code>##      Girth           Height       Volume     
@@ -571,11 +528,10 @@ summary(df_trees)</code></pre>
 ## Height 0.5192801 1.0000000 0.5982497
 ## Volume 0.9671194 0.5982497 1.0000000</code></pre>
 </div>
-</div>
-<div id="comentário-americo-me-baseando-pelos-resumos-acima-escolhi-mtcars-quakes-e-swiss" class="section level3">
-<h3>Comentário Americo: Me baseando pelos resumos acima, escolhi mtcars,
-quakes e swiss</h3>
-</div>
+<div id="bases-selecionadas" class="section level3">
+<h3>Bases selecionadas</h3>
+<p>Me baseando nos resumos, escolhi <strong>mtcars, quakes e
+swiss</strong>.</p>
 </div>
 </div>
 

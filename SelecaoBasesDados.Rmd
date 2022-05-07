@@ -9,57 +9,51 @@ output: html_document
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-# TRABALHO DE MODELAGEM ESTATÍSTICA AVANÇADA
+## Seleção das bases de dados
 
-## Professor: Paulo Maranhão
-## Prazo: 08/05/2022
-
-## Questão 1: Seguem abaixo cinco bases de dados que se encontram do próprio R onde cada variável resposta encontra-se entre parêntesis. Cada grupo ou cada aluno deve escolher três base de dados. Para cada base de dados deve ser feito uma análise estatística conforme a teoria da disciplina de Modelagem Estatística Avançada. Cada análise deve responder os seguintes itens:
-
-### a) Usando o R determine o melhor modelo linear possível para a estimar o valor médio de cada variável resposta. Proponha quaisquer transformações que achar necessário para melhorar o ajuste do modelo.
-### b) Os pressupostos dos modelos foram atendidos? Apresente os resultados graficamente e analiticamente (testes formais) comprovando se as suposições foram satisfeitas.
-### c) Utilize uma parte dos dados para gerar previsões e intervalos de confiança. É possível dizer que o modelo foi bem ajustado?
-
-## Bases de Dados:
-### * mtcars (hp)
-### * LifeCycleSavings (sr)
-### * quakes (mag)
-### * swiss (fertility)
-### * trees (volume)
+Bases de Dados:
+* mtcars (hp)
+* LifeCycleSavings (sr)
+* quakes (mag)
+* swiss (fertility)
+* trees (volume)
 
 
-#### Resumo mtcats, variável  resposta "hp"
+### Resumo mtcats, variável  resposta "hp"
 ```{r}
 df_mtcars = data.frame(mtcars)
 summary(df_mtcars)
 cor(df_mtcars)
 ```
-#### Resumo LifeCycleSavings, variável  resposta "sr"
+### Resumo LifeCycleSavings, variável  resposta "sr"
 ```{r}
 df_LifeCycleSavings =data.frame(LifeCycleSavings)
 summary(df_LifeCycleSavings)
 cor(df_LifeCycleSavings)
 ```
-#### Resumo quakes, variável  resposta "mag"
+### Resumo quakes, variável  resposta "mag"
 ```{r}
 df_quakes =data.frame(quakes)
 summary(df_quakes)
 cor(df_quakes)
 ```
-#### Resumo swiss, variável  resposta "fertility"
+### Resumo swiss, variável  resposta "fertility"
 ```{r}
 df_swiss =data.frame(swiss)
 summary(df_swiss)
 cor(df_swiss)
 ```
 
-#### Resumo trees, variável  resposta "volume"
+### Resumo trees, variável  resposta "volume"
 
 ```{r}
 df_trees =data.frame(trees)
 summary(df_trees)
 cor(df_trees)
 ```
-### Comentário Americo: Me baseando pelos resumos acima, escolhi mtcars, quakes e swiss
+
+### Bases selecionadas  
+
+Me baseando nos resumos, escolhi **mtcars, quakes e swiss**.
 
 
