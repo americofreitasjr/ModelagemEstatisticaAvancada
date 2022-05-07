@@ -10,7 +10,10 @@ output:
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 ```
-## R Markdown
+## Importanto a base
+
+Como a primeira coluna, referente ao ano (...1) é descritiva,  estamos retirando da base. 
+
 
 ```{r}
 library(readxl)
@@ -18,68 +21,158 @@ xlsfile <- file.path('/cloud/project','Canada.xlsx')
 df <- read_xlsx(xlsfile)
 df$...1 <- NULL
 ```
+## Seleção  de variáveis
 
+Ao fazer o summary, eu reparei que as variáveis **EXGR_INTDVAPSH, EXGRPSH, EXGR_DVAPSH, IMGRPSH, FFD_DVAPSH, DFD_FVAPSH, FD_VASH, CONS_VASH, GFCF_VASH** sempre tem o mesmo valor, então elas já podem ser descartadas da seleção de variáveis.
 
 ```{r}
 summary(df)
 ```
 
+Removendo as variáveis com valor constante do dataframe
 ```{r}
-cor(df)
-
+df$EXGR_INTDVAPSH <- NULL
+df$EXGRPSH <- NULL
+df$EXGR_DVAPSH <- NULL 
+df$IMGRPSH <- NULL
+df$FFD_DVAPSH <- NULL
+df$DFD_FVAPSH <- NULL 
+df$FD_VASH <- NULL
+df$CONS_VASH <- NULL
+df$GFCF_VASH <- NULL
 ```
 
+Analisando a autocorrelação das variáveis
 
+```{r}
+cor(df)
+```
+O resultado do sumário abaixo, ficou um pouco inconclusivo. Vou retirar mais algumas variáveis resposta que são autocorrelacionadas e testar novemente.
 ```{r}
 mod = lm(PROD ~ ., data=df)
 summary(mod)
 ```
-Para tentar melhorar o ajuste eu retirei as seguintes variaveis:
+Para tentar melhorar o ajuste eu retirei as seguintes variaveis por suspeita de autocorrelação entre preditoras: **EXGR_FNL,EXGR_INT,EXGR_DVA,EXGR_DDC,EXGR_IDC,EXGR_RIM,EXGR_FVA,IMGR,IMGR_FNL,IMGR_INT,IMGR_DVA,BALGR,REII,PROD,VALU,FFD_DVA,DFD_FVA,BALVAFD,FD_VA,CONS_VA,GFCF_VA,EXGR_DVASH,EXGR,FVASH,EXGR_DVAFXSH,EXGR_FNLDVASH,EXGR_INTDVAPSH**.
 
-EXGR_FNL
-EXGR_INT
-EXGR_DVA
-EXGR_DDC
-EXGR_IDC
-EXGR_RIM
-EXGR_FVA
-IMGR
-IMGR_FNL
-IMGR_INT
-IMGR_DVA
-BALGR
-REII
-PROD
-VALU
-FFD_DVA
-DFD_FVA
-BALVAFD
-FD_VA
-CONS_VA
-GFCF_VA
-EXGR_DVASH
-EXGR_FVASH
-EXGR_DVAFXSH
-EXGR_FNLDVASH
-EXGR_INTDVASH
-EXGR_INTDVAPSH
+Restaram as variáveis: **BALGR+REII+VALU+FFD_DVA+DFD_FVA+BALVAFD+FD_VA+CONS_VA+GFCF_VA+EXGR_TDVAIND+EXGR_TFVAIND+EXGR_SERV_DVASH+EXGR_SERV_FVASH+IMGRINT_REII+IMGR_DVASH+VALU_FFDDVA+PROD_VASH+DEXFVAPSH+FEXDVAPSH**.
 
-
+Observando o resultado do sumário do modelo, o resultado melhorou significativamente **0,9991 de R-squared**
 
 ```{r}
-mod = lm(log(PROD) ~ BALGR+REII+PROD+VALU+FFD_DVA+DFD_FVA+BALVAFD+FD_VA+CONS_VA+GFCF_VA+EXGRPSH+EXGR_DVAPSH+EXGR_TDVAIND+EXGR_TFVAIND+EXGR_SERV_DVASH+EXGR_SERV_FVASH+IMGRINT_REII+IMGR_DVASH+IMGRPSH+FFD_DVAPSH+DFD_FVAPSH+VALU_FFDDVA+PROD_VASH+FD_VASH+CONS_VASH+GFCF_VASH+DEXFVAPSH+FEXDVAPSH, data=df)
+mod = lm(PROD ~ BALGR+REII+VALU+FFD_DVA+DFD_FVA+BALVAFD+FD_VA+CONS_VA+GFCF_VA+EXGR_TDVAIND+EXGR_TFVAIND+EXGR_SERV_DVASH+EXGR_SERV_FVASH+IMGRINT_REII+IMGR_DVASH+VALU_FFDDVA+PROD_VASH+DEXFVAPSH+FEXDVAPSH, data=df)
+
 summary(mod)
 ```
+Fazendo a seleção da melhor combinação de variáveis possível com o step, o melhor resultado foi a combinação das variáveis: 
 
+**lm(formula = PROD ~ BALGR+REII+VALU+FFD_DVA+DFD_FVA+CONS_VA+GFCF_VA+EXGR_TDVAIND+EXGR_SERV_DVASH+EXGR_SERV_FVASH+IMGRINT_REII+IMGR_DVASH+VALU_FFDDVA+PROD_VASH+FEXDVAPSH, data = df)**
 
 ```{r}
 mod2=step(mod, direction = "backward")
 summary(mod2)
 ```
-O modelo linear melhorou significativamente
-
+**Tentativa com log na variável resposta**
 ```{r}
-mod = lm(log(PROD) ~ BALGR + REII + PROD + VALU + FFD_DVA + DFD_FVA + CONS_VA + EXGR_TDVAIND + EXGR_SERV_DVASH + 
-           EXGR_SERV_FVASH + VALU_FFDDVA + PROD_VASH + DEXFVAPSH + FEXDVAPSH,data=df)
+mod = lm(formula = log(PROD) ~ BALGR + REII + VALU + FFD_DVA + DFD_FVA + 
+    CONS_VA + EXGR_SERV_FVASH + 
+    IMGRINT_REII + IMGR_DVASH + VALU_FFDDVA + PROD_VASH + FEXDVAPSH, 
+    data = df)
+
 summary(mod)
 ```
+**Tentativa com sqrt na variável resposta**
+```{r}
+mod = lm(formula = sqrt(PROD) ~ BALGR + REII + VALU + FFD_DVA + DFD_FVA + 
+    CONS_VA + EXGR_SERV_FVASH + 
+    IMGRINT_REII + IMGR_DVASH + VALU_FFDDVA + PROD_VASH + FEXDVAPSH, 
+    data = df)
+
+summary(mod)
+```
+
+O modelo linear melhorou significativamente e vamos seguir com estas variáveis. Uma objservação é que o R-squared ficou 1 (100%) nunca tinha me deparado com um cenário destes. Mesmo tentando tratar a variável resposta com **log** e **sqrt**, o modelo teve piora.
+
+Aparentemente, o melhor modelo linear possível é:
+
+**2,91BALGR;1,32REII;1,99VALU;-2,91FFD_DVA;2,91DFD_FVA;-3,33CONS_VA;-1,25EXGR_SERV_FVASH;2,78IMGRINT_REII;-1,74IMGR_DVASH;-7,44VALU_FFDDVA;-2,55PROD_VASH;-5,79FEXDVAPSH**.
+
+```{r}
+mod = lm(formula = PROD ~ BALGR + REII + VALU + FFD_DVA + DFD_FVA + 
+    CONS_VA + EXGR_SERV_FVASH + 
+    IMGRINT_REII + IMGR_DVASH + VALU_FFDDVA + PROD_VASH + FEXDVAPSH, 
+    data = df)
+
+summary(mod)
+```
+## Testes gráficos
+
+Baseado nos testes gráficos, todos os pressupostos foram atendidos, seguiremos para os testes formais.
+
+```{r}
+par(mfrow=c(2,2))
+aov(mod)
+av=aov(mod)
+av
+plot(av)
+```
+### Testando a Normalidade
+
+Não temos evidências suficientes para rejeitar a hipótese nula e inferir que **PROD** segue uma distribuição normal porque o valor p do teste é maior que 0,05.
+
+Anderson-Darling normality test
+
+```{r}
+anares<-rstandard(mod)
+library(nortest)
+ad.test(anares)
+```
+
+Shapiro-Wilk normality test
+
+```{r}
+shapiro.test(anares)
+```
+
+Para confirmar que todos os pontos caem aproximadamente ao longo da linha de referência, podemos assumir a normalidade. Bem como a conclusão acima é apoiada pelo teste de Shapiro-Wilk nos resíduos ANOVA (W = 0,95, p = 0,38) que não encontra nenhuma indicação de que a normalidade seja violada.
+
+### Testando a Homocedasticidade
+
+A estatística de teste é **18,693** e o valor p correspondente é  **0,0962**. Como o valor de p não é menor que 0,05, não rejeitamos a hipótese nula. Não temos evidências suficientes para dizer que a heterocedasticidade está presente no modelo de regressão.
+
+```{r}
+library(zoo)
+library(lmtest)
+bptest(mod)
+```
+### Testando a Autocorrelação
+
+A partir da saída, podemos ver que a estatística de teste é **1,8275**  e o valor p correspondente é  **0,01281**. Como esse valor de p é menor que 0,05, podemos rejeitar a hipótese nula e concluir que os resíduos nesse modelo de regressão são autocorrelacionados.
+
+```{r}
+dwtest(mod)
+```
+# Intervalo de confiança
+
+Como o ajuste não foi passou por todos os pressupostos, significa que o modelo não fará uma previsão confiável, porém, segue uma simulação de previsão e intervalo de confiança.
+
+```{r}
+pred_in = data.frame(
+  BALGR=-38417.8,
+  REII=131508.8,
+  VALU=1644856.5,
+  FFD_DVA=385330.4,
+  DFD_FVA=423748.1,
+  CONS_VA=1268617.6,
+  EXGR_SERV_FVASH=11.64,
+  IMGRINT_REII=41.17,
+  IMGR_DVASH=0.942,
+  VALU_FFDDVA=23.43,
+  PROD_VASH=54.74,
+  FEXDVAPSH=14.648
+)
+
+predict(mod, pred_in, interval="confidence")
+
+```
+
+
