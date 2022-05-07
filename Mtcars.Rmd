@@ -8,51 +8,50 @@ output: html_document
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 ```
-## Verificando a correlação entre as variáveis
+## Analisando a correlação entre as variáveis
 
-### Em primeira análise hp está correlacionada com: mpg, cyl, disp, qsec, vs, carb
-
-### Eu reparei diversos problemas de multicolinearidade entre as variáveis explicativas
-
+Em primeira análise hp está correlacionada com: mpg, cyl, disp, qsec, vs, carb. Porém, reparei diversos problemas de multicolinearidade entre as variáveis explicativas.
 
 ```{r}
-
 df = data.frame(mtcars)
 cor(df)
-
 ```
 ## Modelo linear por todas as variáveis
 
-### Apenas disp e carb influenciam no modelo em 0.8565
+Considerando todas a variaveis, apenas **disp** e **carb** influenciam no modelo em **0.8565**.
 ```{r}
 
 mod = lm(hp ~ ., data=df)
 summary(mod)
 
 ```
-### Repare que incluindo o wt (hp ~ disp + wt + carb) o modelo melhora (0.8742)
+## Seleção do melhor modelo pelo step
+
+Repare que o summary da função step consegue fazer uma selação razoável com as variáveis **(hp ~ disp + wt + carb)**. A melhor combinação de variáveis sugerida chega a **0.8742** de **R-squared**.
+
 ```{r}
 
 mod2=step(mod, direction = "backward")
 summary(mod2)
 
 ```
-### Aparentemente, o melhor modelo linear possível é: 0,516disp; -28,592wt; 23,576carb;
-### Vamos seguir com este modelo, agora é ver se os pressupostos estão sendo atendidos
+Aparentemente, o melhor modelo linear possível é: **0,516disp; -28,592wt; 23,576carb**;
+Vamos seguir com este modelo, agora é ver se os pressupostos estão sendo atendidos
+
 ```{r}
 mod = lm(formula = hp ~ disp + wt + carb, data = df)
 summary(mod)
 ```
 ## Teste de normalidade
 
-### Por análise visual, a normalidade dos resíduos parece ser satisfatória. 
+Por análise visual, a normalidade dos resíduos parece ser satisfatória. 
 
 ```{r}
 anares=rstandard(mod)
 qqnorm(anares, ylab="Residuos", xlab="Quantis", main="QQPlot")
 qqline(anares)
 ```
-### No teste formal de Normalidade (Anderson-Darling) indica 0.288, ou seja, maior que 5%, indicando que o presuposto de normalidade foi atendido.
+No teste formal de Normalidade (Anderson-Darling) indica 0.288, ou seja, maior que 5%, indicando que o presuposto de normalidade foi atendido.
 
 ```{r}
 library(nortest)
@@ -60,14 +59,15 @@ ad.test(anares)
 ```
 ## Teste de homocedasticidade
 
-### Por avaliação visual, o modelo atender ao pressuposto da homocedásticidade
+Por avaliação visual, a distribuição dos resíduos parecem atender ao pressuposto da homocedásticidade
 
 ```{r}
 fit=fitted.values(mod) 
 plot(fit, anares, ylab="Residuos", xlab="Valores Ajustados", main="Homocedasticidade")
 abline(0,0)
 ```
-### O teste formal (Breusch-Pagan) 0,09634 indica que os resíduos atendem ao presuposto de homocedasticidade foi atendido por ser maior que 5%
+No resultado do teste formal (Breusch-Pagan) 0,09634 indica que os resíduos atendem ao presuposto de homocedasticidade por ser maior que 5%.
+
 ```{r}
 library(zoo)
 library(lmtest)
@@ -75,13 +75,16 @@ bptest(mod)
 ```
 ## Teste de autocorrelação
 
-### O teste formal de autocorrelação (Durbin-Watson) 0,3739 maior que 5% indica que o pressuposto de autocorrelação foi atendido
+No resultado do teste formal de autocorrelação (Durbin-Watson) 0,3739 maior que 5% indica que o pressuposto de autocorrelação foi atendido.
+
 ```{r}
 dwtest(mod)
 ```
-### Até aqui parece que chegamos no melhor ajuste, e não foram necessárias transformações para melhorar o ajuste. E até aqui, todos os pressupostos foram atendidos utilizando os testes formais.
+Até aqui todos os pressupostos foram atendidos, e parece que chegamos no melhor ajuste sem ser necessário transformações nos dados.
 
 ## Previsões e intervalos de confiança
+
+A previsão de hp para os parametros passados com base no modelo, foi **142,5679**. E foi establelecido um intervalo de confiançã entre **127,453** e **157,6827**.
 
 ```{r}
 pred_in = data.frame(disp = 159.0, wt = 2.220, carb = 3)
