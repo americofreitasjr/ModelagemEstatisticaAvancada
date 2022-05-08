@@ -10,7 +10,7 @@
 
 **Bases Selecionadas:** mtcars, quakes e swiss ([Seleção das bases](http://htmlpreview.github.io/?https://github.com/americofreitasjr/ModelagemEstatisticaAvancada/blob/main/SelecaoBasesDados.html))
 
-**Desenvolvimento dos Ajustes:** [Mtcars](http://htmlpreview.github.io/?https://github.com/americofreitasjr/ModelagemEstatisticaAvancada/blob/main/Mtcars.html), [Swiss](http://htmlpreview.github.io/?https://github.com/americofreitasjr/ModelagemEstatisticaAvancada/blob/main/Swiss.html)
+**Desenvolvimento dos Ajustes:** [Mtcars](http://htmlpreview.github.io/?https://github.com/americofreitasjr/ModelagemEstatisticaAvancada/blob/main/Mtcars.html), [Swiss](http://htmlpreview.github.io/?https://github.com/americofreitasjr/ModelagemEstatisticaAvancada/blob/main/Swiss.html), [Quakes](http://htmlpreview.github.io/?https://github.com/americofreitasjr/ModelagemEstatisticaAvancada/blob/main/Quakes.html)
 
 > **a)** Usando o R determine o melhor modelo linear possível para a estimar o valor médio de cada variável resposta. Proponha quaisquer transformações que achar necessário para melhorar o ajuste do modelo.
 > - **Mtcars:** Aparentemente, o melhor modelo linear possível é: **0,516disp; -28,592wt; 23,576carb**.  Não foram necessárias transformações para chegar neste modelo.
