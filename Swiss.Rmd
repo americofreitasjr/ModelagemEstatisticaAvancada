@@ -1,0 +1,155 @@
+---
+title: "Swiss"
+author: "Americo Freitas"
+date: '2022-05-08'
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+## Carregando os dados no R
+
+```{r}
+
+data(swiss)
+```
+
+## Sumario
+
+```{r}
+summary(swiss)
+```
+
+```{r}
+pairs(swiss)
+```
+
+##### Histograma variável resposta 
+
+# histogram plot
+```{r}
+hist(swiss$Fertility,main="Fertility",xlab="Fertility")
+```
+
+# boxplot analysis
+```{r}
+boxplot(swiss)
+```
+
+```{r}
+cor(swiss)
+```
+
+
+# correlation analysis plot
+```{r}
+pairs(swiss)
+```
+
+# basic linear model with all variables
+```{r}
+modelo <- lm(Fertility ~ Agriculture + Examination + Education + 
+               Catholic + Infant.Mortality, swiss)
+
+
+summary(modelo)
+```
+
+```{r}
+modelo2 <- lm(Fertility ~ Agriculture +  Education + 
+               Catholic + Infant.Mortality, swiss)
+
+summary(modelo2)
+```
+
+
+```{r}
+modelo3=step(modelo2, direction = "backward")
+```
+
+### Análise de resíduos para variável Agriculture
+
+```{r}
+library(palmerpenguins)
+library(tidyverse)
+theme_set(theme_bw())
+library(performance)
+```
+
+```{r}
+check_model(modelo3, 
+            check = c("linearity", "qq", "homogeneity", "outliers"))
+
+
+anares.modelo3 = rstandard(modelo3)
+
+hist(anares.modelo3)
+
+qqnorm(anares.modelo3, ylab="Resíduos Padronizados", xlab="Pontuação
+Normal", main="Análise de Resíduos Padronizados")
+qqline(anares.modelo3)
+
+```
+### Análise de resíduos para variável Agriculture
+
+```{r}
+plot(swiss$Agriculture, anares.modelo3, ylab="Resíduos Padronizados",
+     xlab="Agriculture", main="Análise de Resíduos Padronizados") +
+  abline(0,0)
+```
+
+### Análise de resíduos para variável Education
+
+
+```{r}
+plot(swiss$Education, anares.modelo3, ylab="Resíduos Padronizados",
+     xlab="Education", main="Análise de Resíduos Padronizados") +
+  abline(0,0)
+
+
+plot(swiss$Catholic, anares.modelo3, ylab="Resíduos Padronizados",
+     xlab="Catholic", main="Análise de Resíduos Padronizados") +
+  abline(0,0)
+
+plot(swiss$Infant.Mortality, anares.modelo3, ylab="Resíduos Padronizados",
+     xlab="Infant.Mortality", main="Análise de Resíduos Padronizados") +
+  abline(0,0)
+```
+
+```{r}
+library(zoo)
+library(lmtest)
+bptest(modelo3)
+```
+
+A partir do gráfico residual, não há padrão observado, portanto, 
+a suposição de variância constante se mantém.
+
+No gráfico QQ, não vemos caudas pesadas, então a suposição de normalidade também é válida.
+
+
+partimos para os testes formais 
+
+## Teste Anderson-Darling Normalidade dos Resíduos
+```{r}
+library(nortest)
+ad.test(anares.modelo3)
+```
+## Teste Shapiro-Wilk Normalidade dos Resíduos
+```{r}
+shapiro.test(anares.modelo3)
+```
+### Teste Durbin-Watson de Autocorrelação  H0 - Os resíduos não são autocorrelacionados
+```{r}
+dwtest(modelo3)
+```
+Teste de HoltWinters
+
+```{r}
+fit=fitted.values(modelo3)
+plot(fit, anares.modelo3, ylab="Residuos", xlab="Valores Ajustados", main="Homocedasticidade")
+abline(0,0)
+library(lmtest)
+bptest(modelo3)
+```
