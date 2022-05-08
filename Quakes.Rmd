@@ -1,0 +1,86 @@
+---
+title: "Quakes"
+author: "Americo Freitas"
+date: '2022-05-08'
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Summary
+
+```{r}
+summary(quakes)
+```
+
+```{r}
+cor(quakes)
+```
+#Para melhorar a visualização dessa matriz de correlação com a função corrplot.
+#Quanto maior o círculo maior a correlação entre as variaveis.
+#Além disso, quanto mais azul escuro, mais próxima a correlação fica de 1, 
+#que significa que além de forte a correlação é positiva. 
+#Equivalentemente quanto mais próximo de vermelho escuro, mais próxima a 
+#correlação fica de -1, que significa que além de forte a correlação é negativa.
+```{r}
+library(corrplot)
+corrplot(cor(quakes), method = "circle")
+```
+#Nesta primeira aba
+
+```{r}
+mod = lm(mag ~ ., data = quakes)
+summary(mod)
+mod1=step(mod, direction = "backward")
+summary(mod1)
+```
+
+#####Análise de Resíduos  
+```{r}
+anares <- rstandard(mod)
+par(mfrow=c(2,2))
+aov(mod)
+av=aov(mod)
+av
+plot(av)
+```
+# O gráfico (Residual vs. Fitted) mostra indícios da presença de não-linearidades no modelo
+# O gráfico Q-Q dos resíduos padronizados, é usado para verificação da normalidade dos resíduos. No nosso caso, tomamos como hipótese nula a normalidade dos resíduos.
+```{r}
+plot(anares)
+abline(0,0)
+```
+### Teste formais de Normalidade
+```{r}
+library(nortest)
+ad.test(anares)
+```
+#A hipótese nula para o teste AD é que os dados  seguem  uma distribuição normal.Nesse caso, nosso valor p é 0.1992. Como isso não está abaixo do nosso nível de significância (digamos 0,05),não temos evidências suficientes para rejeitar a hipótese nula. É seguro dizer que nossos dados seguem uma distribuição normal.
+```{r}
+shapiro.test(anares)
+```
+#O valor p do teste acaba sendo  0.01446 . Como esse valor é menor que 0,05, temos evidências suficientes para dizer que os dados da amostra  não  vêm de uma população com distribuição normal.
+
+### Teste formal de Homocedasticidade
+```{r}
+library(zoo)
+library(lmtest)
+bptest(mod)
+```
+#A estatística de teste é 6.7019 e o valor p correspondente é  0.1525 . Como o valor de p não é menor que 0,05, não rejeitamos a hipótese nula. Não temos evidências suficientes para dizer que a heterocedasticidade está presente no modelo de regressão.
+
+### Teste de Autocorrelação - Gráfico
+```{r}
+plot(anares)
+abline(0,0)
+```
+
+### Teste formal de Autocorrelação
+```{r}
+dwtest(mod)
+```
+#A partir da saída, podemos ver que a estatística de teste é  1.9414  e o valor p correspondente é  0.1751 . Como esse valor de p é maio que 0,05, não podemos rejeitar a hipótese nula e concluir que os resíduos nesse modelo de regressão não são autocorrelacionados.
+
+```
