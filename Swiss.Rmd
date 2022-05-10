@@ -8,64 +8,99 @@ output: html_document
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 ```
-## Carregando os dados no R
+## Descrição do conjunto de dados :
+
+Medidas de fecundidade padronizadas e indicadores socioeconômicos para cada uma das 47 províncias francófonas da Suíça por volta de 1888.
+
+### Formato do conjunto de dados:
+
+** Um quadro de dados com 47 observações em 6 variáveis, cada uma delas em porcentagem, ou seja, em [0, 100]. **
+
+* [,1] Fertility- Ig, 'medida comum de fertilidade padronizada'
+* [,2] Agriculture- % de homens envolvidos na agricultura como ocupação
+* [,3] Examination- % de recrutas que receberam a nota mais
+* [,3] Examination- % de recrutas que receberam a nota mais alta no exame do exército
+* [,4] Education- % de educação além da escola primária para recrutas.
+* [,5] Catholic- % 'católico' (em oposição a 'protestante').
+* [,6] Infant.Mortality- nascidos vivos que vivem menos de 1 ano.
+
+** Todas as variáveis, exceto 'Fertilidade', fornecem proporções da população. **
 
 ```{r}
-
 data(swiss)
-```
-
-## Sumario
-
-```{r}
 summary(swiss)
 ```
+## Gráfico de correlação das variáveis
+
+* O gráfico mostra a relação linear entre Agriculture e Examination.
+* Além disso, entre Examination e Education.
+* A interpretação dos coeficientes será afetada.
 
 ```{r}
 pairs(swiss)
 ```
+## boxplot analysis
 
-##### Histograma variável resposta 
+* Catholic variável cobre uma ampla gama de valores
+* Infant.Mortality variável é muito condensada
+* Education parece ter alguns outliers
 
-# histogram plot
-```{r}
-hist(swiss$Fertility,main="Fertility",xlab="Fertility")
-```
-
-# boxplot analysis
 ```{r}
 boxplot(swiss)
 ```
+## Correlação
+
+Observamos que não há problema de Multicolinearidade, pois não há correlação maior ou igual a 70% entre as covariáveis (variáveis explicativas)
+* Todas as correlações com Fertility são menores que 0,8, indicando que não há sinais de forte multicolinearidade.
+* As correlações estão entre 0,3-0,8, indicando multicolinearidade leve.
 
 ```{r}
 cor(swiss)
 ```
+## Ajustando um Modelo Linear
 
+O valor de p-value demonstra que ao menos uma variável é significativa. Vemos que exceto a variável Examination, todas as outras são significativas pois o valor de Pr(>|t|) é extremamente grande (0,31546 > 0,05). O valor de R2 ajustado é menor do que 70 % porém bem próximo  (0,67). 
 
-# correlation analysis plot
 ```{r}
-pairs(swiss)
-```
-
-# basic linear model with all variables
-```{r}
-modelo <- lm(Fertility ~ Agriculture + Examination + Education + 
-               Catholic + Infant.Mortality, swiss)
-
-
+modelo <- lm(Fertility ~ Agriculture + Examination + Education + Catholic + Infant.Mortality, swiss)
 summary(modelo)
 ```
+Vamos gerar um novo sumário retirando a variável Examination devido ao seu valor de Pr(>|t|)
+
+Agora todas as variáveis são significativas ( valor de p acima de 5% ) 
+O valor de R2 ou coeficiente de explicação da variável resposta pelas variváveis explicativas ainda é menor do que 70% e permaneceu em 0,6707 , próximo de 70% mas ainda moderado. 
 
 ```{r}
-modelo2 <- lm(Fertility ~ Agriculture +  Education + 
-               Catholic + Infant.Mortality, swiss)
-
+modelo2 <- lm(Fertility ~ Agriculture +  Education + Catholic + Infant.Mortality, swiss)
 summary(modelo2)
 ```
-
+Perceba que o resultado é o mesmo (sugere retirar a variável Examination) utilizando.
 
 ```{r}
-modelo3=step(modelo2, direction = "backward")
+modelo3=step(modelo, direction = "backward")
+summary(modelo3)
+```
+
+## Transformando a variável resposta com log
+
+O modelo passou para um nível alto de significância ou seja > 70% . O coeficente. de explicação (Adjusted R-squared) é de aproximadamente 71%, o que significa que as variáveis Agriculture, Education, Catholic e Infant.Mortality (retirada a variável  Examination) explicam 71% das variações da variável  resposta Fertility. Dessa forma, o modelo fica:
+
+Fertility = 4.136 -0.002 *Agriculture - 0.017 * Education + 0.001 * Catholic + 0.016 * Infant.Mortality
+
+Houve tentativa de outros ajustes como log log, semi log, inverso e raiz-quadrada mas em todos o R quadrado ajustado permaneceu abaixo de 70 %, indicando um grau moderado de explicação da variável resposta pelas variáveis explicativas.
+
+Permanecemos então com o ajuste log linear.
+
+O teste F é usado para testar se a hipótese nula os verdadeiros coeficientes de inclinação são simultaneamente iguais a zero, indicando se há relação significante da variável dependente com o conjunto de variáveis independentes, ou seja a significância total do modelo i.e. se há algum βi≠ 0.
+
+O modelo está adequado globalmente pois p-value em 1.484e-11 (menor do que 5%) e o R quadrado ajustado ou coeficiente de explicação está com 71%; 
+
+O teste F soma o poder preditivo de todas as variáveis independentes e determina que é improvável que todos os coeficientes sejam iguais a zero. No entanto, é possível que cada variável não seja preditiva o suficiente para ser estatisticamente significativa. Em outras palavras, a amostra fornece evidências suficientes para concluir que seu modelo é significativo, mas não o suficiente para concluir que qualquer variável individual é significativa.
+Ao analisarmos o summary do novo modelo vemos que todas as variáveis explicativas são significativas com todas as variáveis explicativas com p abaixo de 5%(após a retirada da variável Examination):. 
+
+```{r}
+modelo2 <- lm(log(Fertility) ~ Agriculture +  Education + Catholic + Infant.Mortality, swiss)
+summary(modelo2)
 ```
 
 ### Análise de resíduos para variável Agriculture
@@ -78,50 +113,52 @@ library(performance)
 ```
 
 ```{r}
-check_model(modelo3, 
-            check = c("linearity", "qq", "homogeneity", "outliers"))
-
-
+#check_model(modelo3, check = c("linearity", "qq", "homogeneity", "outliers"))
 anares.modelo3 = rstandard(modelo3)
-
 hist(anares.modelo3)
+```
+Com os resíduos em ordem vemos que o plot do qqnorm+qqline é aproximadamente uma reta de 45 graus portanto existe normalidade dos resíduos. No gráfico QQ, não vemos caudas pesadas, então a suposição de normalidade também é válida.
 
+```{r}
 qqnorm(anares.modelo3, ylab="Resíduos Padronizados", xlab="Pontuação
 Normal", main="Análise de Resíduos Padronizados")
 qqline(anares.modelo3)
-
 ```
 ### Análise de resíduos para variável Agriculture
+
+Não se percebe nenhuma formação de padrão (distribuição aleatória dos resíduos) podendo-se presumir em normalidade dos resíduos. 
 
 ```{r}
 plot(swiss$Agriculture, anares.modelo3, ylab="Resíduos Padronizados",
      xlab="Agriculture", main="Análise de Resíduos Padronizados") +
-  abline(0,0)
+abline(0,0)
 ```
 
 ### Análise de resíduos para variável Education
+
+Não se percebe nenhuma formação de padrão (distribuição aleatória dos resíduos) podendo-se presumir em normalidade dos resíduos. 
 
 
 ```{r}
 plot(swiss$Education, anares.modelo3, ylab="Resíduos Padronizados",
      xlab="Education", main="Análise de Resíduos Padronizados") +
-  abline(0,0)
-
-
-plot(swiss$Catholic, anares.modelo3, ylab="Resíduos Padronizados",
-     xlab="Catholic", main="Análise de Resíduos Padronizados") +
-  abline(0,0)
-
-plot(swiss$Infant.Mortality, anares.modelo3, ylab="Resíduos Padronizados",
-     xlab="Infant.Mortality", main="Análise de Resíduos Padronizados") +
-  abline(0,0)
+abline(0,0)
 ```
+Não se percebe nenhuma formação de padrão (distribuição aleatória dos resíduos) podendo-se presumir em normalidade dos resíduos.
 
 ```{r}
-library(zoo)
-library(lmtest)
-bptest(modelo3)
+plot(swiss$Catholic, anares.modelo3, ylab="Resíduos Padronizados",
+     xlab="Catholic", main="Análise de Resíduos Padronizados") +
+abline(0,0)
 ```
+Não se percebe nenhuma formação de padrão (distribuição aleatória dos resíduos) podendo-se presumir em normalidade dos resíduos. 
+
+```{r}
+plot(swiss$Infant.Mortality, anares.modelo3, ylab="Resíduos Padronizados",
+     xlab="Infant.Mortality", main="Análise de Resíduos Padronizados") +
+abline(0,0)
+```
+
 
 A partir do gráfico residual, não há padrão observado, portanto, 
 a suposição de variância constante se mantém.
@@ -132,24 +169,32 @@ No gráfico QQ, não vemos caudas pesadas, então a suposição de normalidade t
 partimos para os testes formais 
 
 ## Teste Anderson-Darling Normalidade dos Resíduos
+
+O teste de Anderson-Darling indica que não podemos rejeitar a hipótese de normalidade dos resíduos  pois o p-value é maior que 5%
+
 ```{r}
 library(nortest)
 ad.test(anares.modelo3)
 ```
 ## Teste Shapiro-Wilk Normalidade dos Resíduos
+
+O teste de Shapiro-Wilk, com p-value acima de 5%, também indica que não podemos rejeitar a hipótese de normalidade dos resíduos.
+
 ```{r}
 shapiro.test(anares.modelo3)
 ```
-### Teste Durbin-Watson de Autocorrelação  H0 - Os resíduos não são autocorrelacionados
-```{r}
-dwtest(modelo3)
-```
-Teste de HoltWinters
+O teste de Breusch-Pagan, com p-value acima de 5%, indica que não podemos rejeitar 
+a hipótese de homocedasticidade dos resíduos.
 
 ```{r}
-fit=fitted.values(modelo3)
-plot(fit, anares.modelo3, ylab="Residuos", xlab="Valores Ajustados", main="Homocedasticidade")
-abline(0,0)
 library(lmtest)
 bptest(modelo3)
+```
+
+### Teste Durbin-Watson de Autocorrelação  H0 - Os resíduos não são autocorrelacionados
+
+O teste de Durbin-Watson indica que devemos rejeitar a hipótese de Independência (Não Autocorrelação) dos resíduos. Neste caso o modelo não é satisfatório para uma regressão linear
+
+```{r}
+dwtest(modelo3)
 ```
