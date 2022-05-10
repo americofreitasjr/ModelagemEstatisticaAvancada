@@ -13,13 +13,17 @@
 **Desenvolvimento dos Ajustes:** [Mtcars](http://htmlpreview.github.io/?https://github.com/americofreitasjr/ModelagemEstatisticaAvancada/blob/main/Mtcars.html), [Swiss](http://htmlpreview.github.io/?https://github.com/americofreitasjr/ModelagemEstatisticaAvancada/blob/main/Swiss.html), [Quakes](http://htmlpreview.github.io/?https://github.com/americofreitasjr/ModelagemEstatisticaAvancada/blob/main/Quakes.html)
 
 > **a)** Usando o R determine o melhor modelo linear possível para a estimar o valor médio de cada variável resposta. Proponha quaisquer transformações que achar necessário para melhorar o ajuste do modelo.
-> - **Mtcars:** Aparentemente, o melhor modelo linear possível é: **0,516disp; -28,592wt; 23,576carb**.  Não foram necessárias transformações para chegar neste modelo.
->
+> - **Mtcars:** Aparentemente, o melhor modelo linear possível é: **0,516disp; -28,592wt; 23,576carb**. Não foram necessárias transformações para chegar neste modelo.
+> - **Swiss:** O melhor modelo linear possível é: **Fertility = 4.136 -0.002 Agriculture - 0.017 Education + 0.001 * Catholic + 0.016 * Infant.Mortality**. A transformação realizada, foi a inclusão do log na variável resposta.
+> - **Quakes:** 
 > **b)** Os pressupostos dos modelos foram atendidos? Apresente os resultados graficamente e analiticamente (testes formais) comprovando se as suposições foram satisfeitas.
 > - **Mtcars:** Todos os pressupostos foram atendidos, as apresentações gráficas estão neste ([link](http://htmlpreview.github.io/?https://github.com/americofreitasjr/ModelagemEstatisticaAvancada/blob/main/Mtcars.html)) 
->
+> - **Swiss:** O teste de Durbin-Watson indica que devemos rejeitar a hipótese de Independência (Não Autocorrelação) dos resíduos, as apresentações gráficas estão neste ([link](http://htmlpreview.github.io/?https://github.com/americofreitasjr/ModelagemEstatisticaAvancada/blob/main/Swiss.html))
+> - **Quakes:** 
 > **c)** Utilize uma parte dos dados para gerar previsões e intervalos de confiança. É possível dizer que o modelo foi bem ajustado?
 > - **Mtcars:** As previsões estão neste ([link](http://htmlpreview.github.io/?https://github.com/americofreitasjr/ModelagemEstatisticaAvancada/blob/main/Mtcars.html)). Pelos resultados apresentados, é possível sim dizer que o modelo foi bem ajustado.
+> - **Swiss:** AS previsões e intervalos de confiança não foram gerados, porque mesmo com a transformação nos dados o modelo não ficou bem ajustado, não possibilidando uma previsão Assertiva.
+> - **Quakes:**
 
 ### *Bases de Dados:*
 * mtcars (hp)
