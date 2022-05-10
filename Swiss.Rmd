@@ -198,3 +198,7 @@ O teste de Durbin-Watson indica que devemos rejeitar a hipótese de Independênc
 ```{r}
 dwtest(modelo3)
 ```
+
+```{r}
+plot(anares.modelo3)
+```
