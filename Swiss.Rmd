@@ -1,8 +1,10 @@
 ---
 title: "Swiss"
-author: "Americo Freitas"
+author: 'Grupo: Americo Freitas, Arleks dos Santos e Luciano Ozorio'
 date: '2022-05-08'
-output: html_document
+output:
+  pdf_document: default
+  html_document: default
 ---
 
 ```{r setup, include=FALSE}
@@ -91,7 +93,7 @@ Houve tentativa de outros ajustes como log log, semi log, inverso e raiz-quadrad
 
 Permanecemos então com o ajuste log linear.
 
-O teste F é usado para testar se a hipótese nula os verdadeiros coeficientes de inclinação são simultaneamente iguais a zero, indicando se há relação significante da variável dependente com o conjunto de variáveis independentes, ou seja a significância total do modelo i.e. se há algum βi≠ 0.
+O teste F é usado para testar se a hipótese nula os verdadeiros coeficientes de inclinação são simultaneamente iguais a zero, indicando se há relação significante da variável dependente com o conjunto de variáveis independentes, ou seja a significância total do modelo i.e. se há algum B i diferente de 0.
 
 O modelo está adequado globalmente pois p-value em 1.484e-11 (menor do que 5%) e o R quadrado ajustado ou coeficiente de explicação está com 71%; 
 
@@ -202,3 +204,84 @@ dwtest(modelo3)
 ```{r}
 plot(anares.modelo3)
 ```
+
+Dessa forma, como os pressupostos do modelo não foram satisfeitos, concluímos que esse primeiro modelo ajustado não é adequado. Assim, podemos fazer alguma transformação na variável resposta ou nas variáveis explicativas para tentar atender os pressupostos do modelo de regressão. Faremos então a aplicação da transformada de Box-Cox. 
+
+### Aplicado a Transformada de Box-Cox
+
+```{r}
+library(MASS)
+boxcox(modelo, lambda = seq(-2,2, 1/10), plotit = TRUE, data=swiss)
+```
+Lambda aproximadamente em 0,8. Elevaremos a variável resposta a 0,8. 
+
+```{r}
+modelo4 <- lm((Fertility)^0.8 ~ Agriculture  + Education + Catholic + Infant.Mortality, swiss)
+summary(modelo4)
+```
+Analisando o summary houve uma piora do R-quadrado ajustado (diminuiu um pouco)
+
+### Análise dos Resíduos
+
+Passemos para a Análise dos resíduos após a transformação box-cox.
+
+```{r}
+anares <- rstandard(modelo4)
+par(mfrow=c(2,2))
+plot(modelo4)
+```
+Pelo Normal Q-Q podemos verificar que o pressuposto da normalidade parece ter sido atendido para o modelo com a transformação de Box-Cox, assim como a suposição de homocedasticidade, visto que o pelos gráficos 1 e 3 os pontos parecem estar aleatórios. No entanto, o gráfico para os resíduos padronizados abaixo indica que a questão da autocorrelação persiste.
+
+```{r}
+plot(anares)
+```
+Procedendo os testes formais, temos os seguintes resultado:
+
+```{r}
+library(nortest)
+ad.test(anares)
+```
+
+Como p-valor acima de 5%, Verificamos que a transformação de Box-Cox continuamos com a normalidade dos resíduos.
+
+```{r}
+shapiro.test(anares)
+```
+Como p-valor acima de 5%, verificamos que a transformação de Box-Cox continuamos com a normalidade dos resíduos.
+```{r}
+library(lmtest)
+bptest(modelo4)
+```
+Também com o valor acima de 5% o p-valor para o teste de homocedasticidade, atende o pressuposto de variância constante dos resíduos, implicando no atendimento dessa suposição.
+
+### Teste Durbin-Watson de Autocorrelação
+```{r}
+dwtest(modelo4)
+```
+No entanto, como vimos em sala de aula, a transformação de Box-Cox não conseguiu resolver a questão da autocorrelação (p-valor < 0,05). Dessa forma, o modelo não é válido.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
