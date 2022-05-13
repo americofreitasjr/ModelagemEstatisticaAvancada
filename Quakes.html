@@ -554,12 +554,21 @@ abline(0,0)</code></pre>
 ## data:  mod
 ## DW = 1.9414, p-value = 0.1751
 ## alternative hypothesis: true autocorrelation is greater than 0</code></pre>
-<p>#A partir da saída, podemos ver que a estatística de teste é 1.9414 e
+</div>
+</div>
+<div id="a-partir-da-saída-podemos-ver-que-a-estatística-de-teste-é-1.9414-e-o-valor-p-correspondente-é-0.1751-.-como-esse-valor-de-p-é-maio-que-005-não-podemos-rejeitar-a-hipótese-nula-e-concluir-que-os-resíduos-nesse-modelo-de-regressão-não-são-autocorrelacionados." class="section level1">
+<h1>A partir da saída, podemos ver que a estatística de teste é 1.9414 e
 o valor p correspondente é 0.1751 . Como esse valor de p é maio que
 0,05, não podemos rejeitar a hipótese nula e concluir que os resíduos
-nesse modelo de regressão não são autocorrelacionados.</p>
-<p>```</p>
-</div>
+nesse modelo de regressão não são autocorrelacionados.</h1>
+<pre class="r"><code>pred_in = data.frame(lat=-20.62 , long = 181.03 , depth = 650 , stations = 15 )
+predict(mod, pred_in, interval=&quot;confidence&quot;)</code></pre>
+<pre><code>##        fit      lwr      upr
+## 1 4.231062 4.207129 4.254995</code></pre>
+<p>A previsão de <strong>mag</strong> para os parametros passados com
+base no modelo, foi <strong>4.231</strong>. E foi establelecido um
+intervalo de confiançã entre <strong>4.207</strong> e
+<strong>4.254</strong>.</p>
 </div>
 
 

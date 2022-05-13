@@ -3,8 +3,8 @@ title: "Quakes"
 author: 'Grupo: Americo Freitas, Arleks dos Santos e Luciano Ozorio'
 date: '2022-05-08'
 output:
-  pdf_document: default
   html_document: default
+  pdf_document: default
 ---
 
 ```{r setup, include=FALSE}
@@ -83,6 +83,10 @@ abline(0,0)
 ```{r}
 dwtest(mod)
 ```
-#A partir da saída, podemos ver que a estatística de teste é  1.9414  e o valor p correspondente é  0.1751 . Como esse valor de p é maio que 0,05, não podemos rejeitar a hipótese nula e concluir que os resíduos nesse modelo de regressão não são autocorrelacionados.
+# A partir da saída, podemos ver que a estatística de teste é  1.9414  e o valor p correspondente é  0.1751 . Como esse valor de p é maio que 0,05, não podemos rejeitar a hipótese nula e concluir que os resíduos nesse modelo de regressão não são autocorrelacionados.
 
+```{r}
+pred_in = data.frame(lat=-20.62 , long = 181.03 , depth = 650 , stations = 15 )
+predict(mod, pred_in, interval="confidence")
 ```
+A previsão de **mag** para os parametros passados com base no modelo, foi **4.231**. E foi establelecido um intervalo de confiançã entre **4.207** e **4.254**.
