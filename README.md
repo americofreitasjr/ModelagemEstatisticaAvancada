@@ -16,14 +16,16 @@
 > - **Mtcars:** Aparentemente, o melhor modelo linear possível é: **hp = 53,17 + 0,52disp -28,59wt + 23,58carb**. Não foram necessárias transformações para chegar neste modelo.
 > - **Swiss:** O melhor modelo linear possível é: **Fertility = 4.136 -0,002 Agriculture - 0,017 Education + 0,001 Catholic + 0.016 Infant.Mortality**. A transformação realizada, foi a inclusão do log na variável resposta.
 > - **Quakes:** O melhor modelo linear possível é: **mag = 5,73 -7,69 lat -9,45 long -2,72 depth + 1,53 stations**. Nenhuma transformação nas variáveis foi aplicada.
+> 
 > **b)** Os pressupostos dos modelos foram atendidos? Apresente os resultados graficamente e analiticamente (testes formais) comprovando se as suposições foram satisfeitas.
 > - **Mtcars:** Todos os pressupostos foram atendidos, as apresentações gráficas estão neste ([link](http://htmlpreview.github.io/?https://github.com/americofreitasjr/ModelagemEstatisticaAvancada/blob/main/Mtcars.html)) 
 > - **Swiss:** O teste de Durbin-Watson indica que devemos rejeitar a hipótese de Independência (Não Autocorrelação) dos resíduos, as apresentações gráficas estão neste ([link](http://htmlpreview.github.io/?https://github.com/americofreitasjr/ModelagemEstatisticaAvancada/blob/main/Swiss.html))
 > - **Quakes:** Todos os pressupostos foram atendidos, as apresentações gráficas estão neste ([link](http://htmlpreview.github.io/?https://github.com/americofreitasjr/ModelagemEstatisticaAvancada/blob/main/Quakes.html)) 
+> 
 > **c)** Utilize uma parte dos dados para gerar previsões e intervalos de confiança. É possível dizer que o modelo foi bem ajustado?
 > - **Mtcars:** As previsões estão neste ([link](http://htmlpreview.github.io/?https://github.com/americofreitasjr/ModelagemEstatisticaAvancada/blob/main/Mtcars.html)). Pelos resultados apresentados, é possível sim dizer que o modelo foi bem ajustado.
 > - **Swiss:** AS previsões e intervalos de confiança não foram gerados, porque mesmo com a transformação nos dados o modelo não ficou bem ajustado, não possibilidando uma previsão Assertiva.
-> - **Quakes:**
+> - **Quakes:** 
 
 ### *Bases de Dados:*
 * mtcars (hp)
@@ -46,6 +48,8 @@ Dessa forma, foi solicitado ao grupo de estudos do **MBA Executivo em Business A
 grupo de países (ex: União Europeia, G20, países não membros da OECD, etc) e responder as seguintes questões:
 
 **a)** Usando o R determine o melhor modelo linear possível para a estimar o valor médio da variável resposta. Proponha quaisquer transformações que achar necessário para melhorar o ajuste do modelo.
+
+O melhor modelo linear é: **PROD = 1,64 + 2,91 BALGR + 1,32 REII + 1,99 VALU -2,91 FFD_DVA +2,91 DFD_FVA -3,33 CONS_VA -1,25 EXGR_SERV_FVASH +2,78 IMGRINT_REII -1,74 IMGR_DVASH -7,44 VALU_FFDDVA -2,55 PROD_VASH -5,79 FEXDVAPSH.
 
 **b)** Quais fatores afetam a variável resposta?
 
