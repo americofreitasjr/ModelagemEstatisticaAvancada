@@ -11,7 +11,14 @@ output:
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-# Summary
+Depois de chamar nosso conjunto de dados, é sempre uma boa prática realizar EDA, Análise Exploratória de Dados, antes de realizar análises rigorosas. O EDA nos permite confirmar que os dados corretos foram carregados no R, ao mesmo tempo em que nos dá uma prévia do conjunto de dados. Abaixo estão duas funções EDA comuns para ajudá-lo a ter uma ideia dos dados, sendo que ambas têm o conjunto de dados como o único argumento. A função head mostra as primeiras seis linhas e todas as colunas dos dados, enquanto a função de resumo fornece estatísticas de resumo para cada variável.
+```{r}
+head(quakes)
+```
+
+## Summary
+
+Além disso, o conjunto de dados de terremotos contém 1.000 observações de dados de terremotos que ocorreram perto da ilha tropical de Fiji. Cada observação tem a latitude, longitude, profundidade, magnitude e número de estações que relataram a atividade sísmica. Para este R-Guide, focaremos na magnitude, medida pela escala logarítmica de Richter, do terremoto e no número de estações que relataram cada terremoto.
 
 ```{r}
 summary(quakes)
@@ -20,26 +27,35 @@ summary(quakes)
 ```{r}
 cor(quakes)
 ```
-#Para melhorar a visualização dessa matriz de correlação com a função corrplot.
-#Quanto maior o círculo maior a correlação entre as variaveis.
-#Além disso, quanto mais azul escuro, mais próxima a correlação fica de 1, 
-#que significa que além de forte a correlação é positiva. 
-#Equivalentemente quanto mais próximo de vermelho escuro, mais próxima a 
-#correlação fica de -1, que significa que além de forte a correlação é negativa.
+*Para melhorar a visualização dessa matriz de correlação com a função corrplot.
+*Quanto maior o círculo maior a correlação entre as variaveis.
+*Além disso, quanto mais azul escuro, mais próxima a correlação fica de 1, 
+*que significa que além de forte a correlação é positiva. 
+*Equivalentemente quanto mais próximo de vermelho escuro, mais próxima a 
+*correlação fica de -1, que significa que além de forte a correlação é negativa.
+*As variáveis explicativas mag e stations possuem alta correlação 0.85
 ```{r}
 library(corrplot)
 corrplot(cor(quakes), method = "circle")
 ```
-#Nesta primeira aba
+## Nesta primeira aba
+
+
 
 ```{r}
 mod = lm(mag ~ ., data = quakes)
 summary(mod)
+```
+
+O método step indica que todas as variáveis são significativas.
+
+```{r}
 mod1=step(mod, direction = "backward")
 summary(mod1)
 ```
+Todas as variáveis explicativas são significativas pois possuem p-value abaixo de 5% (teste t). O Valor de R quadrado ajustado é alto 77% (maior que 70%) o que significa que as variáveis explicativas explicam 77% da variável mag.
 
-#####Análise de Resíduos  
+## Análise de Resíduos  
 ```{r}
 anares <- rstandard(mod)
 par(mfrow=c(2,2))
@@ -48,8 +64,8 @@ av=aov(mod)
 av
 plot(av)
 ```
-# O gráfico (Residual vs. Fitted) mostra indícios da presença de não-linearidades no modelo
-# O gráfico Q-Q dos resíduos padronizados, é usado para verificação da normalidade dos resíduos. No nosso caso, tomamos como hipótese nula a normalidade dos resíduos.
+* O gráfico (Residual vs. Fitted) mostra indícios da presença de não-linearidades no modelo
+* O gráfico Q-Q dos resíduos padronizados, é usado para verificação da normalidade dos resíduos. No nosso caso, tomamos como hipótese nula a normalidade dos resíduos.
 ```{r}
 plot(anares)
 abline(0,0)
@@ -59,11 +75,11 @@ abline(0,0)
 library(nortest)
 ad.test(anares)
 ```
-#A hipótese nula para o teste AD é que os dados  seguem  uma distribuição normal.Nesse caso, nosso valor p é 0.1992. Como isso não está abaixo do nosso nível de significância (digamos 0,05),não temos evidências suficientes para rejeitar a hipótese nula. É seguro dizer que nossos dados seguem uma distribuição normal.
+A hipótese nula para o teste AD é que os dados  seguem  uma distribuição normal.Nesse caso, nosso valor p é 0.1992. Como isso não está abaixo do nosso nível de significância (digamos 0,05),não temos evidências suficientes para rejeitar a hipótese nula. É seguro dizer que nossos dados seguem uma distribuição normal.
 ```{r}
 shapiro.test(anares)
 ```
-#O valor p do teste acaba sendo  0.01446 . Como esse valor é menor que 0,05, temos evidências suficientes para dizer que os dados da amostra  não  vêm de uma população com distribuição normal.
+O valor p do teste acaba sendo  0.01446 . Como esse valor é menor que 0,05, temos evidências suficientes para dizer que os dados da amostra  não  vêm de uma população com distribuição normal.
 
 ### Teste formal de Homocedasticidade
 ```{r}
@@ -83,7 +99,7 @@ abline(0,0)
 ```{r}
 dwtest(mod)
 ```
-# A partir da saída, podemos ver que a estatística de teste é  1.9414  e o valor p correspondente é  0.1751 . Como esse valor de p é maio que 0,05, não podemos rejeitar a hipótese nula e concluir que os resíduos nesse modelo de regressão não são autocorrelacionados.
+A partir da saída, podemos ver que a estatística de teste é  1.9414  e o valor p correspondente é  0.1751 . Como esse valor de p é maio que 0,05, não podemos rejeitar a hipótese nula e concluir que os resíduos nesse modelo de regressão não são autocorrelacionados.
 
 ```{r}
 pred_in = data.frame(lat=-20.62 , long = 181.03 , depth = 650 , stations = 15 )
