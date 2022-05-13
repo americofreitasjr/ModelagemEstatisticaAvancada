@@ -25,9 +25,9 @@
 > - **Quakes:** Todos os pressupostos foram atendidos, as apresentações gráficas estão neste ([link](http://htmlpreview.github.io/?https://github.com/americofreitasjr/ModelagemEstatisticaAvancada/blob/main/Quakes.html)) 
 > 
 > **c)** Utilize uma parte dos dados para gerar previsões e intervalos de confiança. É possível dizer que o modelo foi bem ajustado?
-> - **Mtcars:** As previsões estão neste ([link](http://htmlpreview.github.io/?https://github.com/americofreitasjr/ModelagemEstatisticaAvancada/blob/main/Mtcars.html)). Pelos resultados apresentados, é possível sim dizer que o modelo foi bem ajustado.
+> - **Mtcars:** A previsão de hp para os parametros passados com base no modelo, foi 142,5679. E foi establelecido um intervalo de confiançã entre 127,453 e 157,6827.. Pelos resultados apresentados, é possível sim dizer que o modelo foi bem ajustado.
 > - **Swiss:** AS previsões e intervalos de confiança não foram gerados, porque mesmo com a transformação nos dados o modelo não ficou bem ajustado, não possibilidando uma previsão Assertiva.
-> - **Quakes:** 
+> - **Quakes:** A previsão de mag para os parametros passados com base no modelo, foi 4,231. E foi establelecido um intervalo de confiança entre 4,207 e 4,254. Pelos resultados apresentados, é possível sim dizer que o modelo foi bem ajustado.
 
 ### *Bases de Dados:*
 * mtcars (hp)
@@ -54,6 +54,8 @@ grupo de países (ex: União Europeia, G20, países não membros da OECD, etc) e
 O melhor modelo linear é: **PROD = 1,64 + 2,91 BALGR + 1,32 REII + 1,99 VALU -2,91 FFD_DVA +2,91 DFD_FVA -3,33 CONS_VA -1,25 EXGR_SERV_FVASH +2,78 IMGRINT_REII -1,74 IMGR_DVASH -7,44 VALU_FFDDVA -2,55 PROD_VASH -5,79 FEXDVAPSH.**
 
 **b)** Quais fatores afetam a variável resposta?
+
+Todas as variáveis explicativas.
 
 **b)** O modelo é adequado para estimar um valor futuro da variável resposta?
 
