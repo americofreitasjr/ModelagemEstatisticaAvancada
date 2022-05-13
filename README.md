@@ -25,9 +25,9 @@
 > - **Quakes:** Todos os pressupostos foram atendidos, as apresentações gráficas estão neste ([link](http://htmlpreview.github.io/?https://github.com/americofreitasjr/ModelagemEstatisticaAvancada/blob/main/Quakes.html)) 
 > 
 > **c)** Utilize uma parte dos dados para gerar previsões e intervalos de confiança. É possível dizer que o modelo foi bem ajustado?
-> - **Mtcars:** As previsões estão neste ([link](http://htmlpreview.github.io/?https://github.com/americofreitasjr/ModelagemEstatisticaAvancada/blob/main/Mtcars.html)). Pelos resultados apresentados, é possível sim dizer que o modelo foi bem ajustado.
+> - **Mtcars:** A previsão de hp para os parametros passados com base no modelo, foi 142,5679. E foi establelecido um intervalo de confiançã entre 127,453 e 157,6827.. Pelos resultados apresentados, é possível sim dizer que o modelo foi bem ajustado.
 > - **Swiss:** AS previsões e intervalos de confiança não foram gerados, porque mesmo com a transformação nos dados o modelo não ficou bem ajustado, não possibilidando uma previsão Assertiva.
-> - **Quakes:** 
+> - **Quakes:** A previsão de mag para os parametros passados com base no modelo, foi 4,231. E foi establelecido um intervalo de confiança entre 4,207 e 4,254. Pelos resultados apresentados, é possível sim dizer que o modelo foi bem ajustado.
 
 ### *Bases de Dados:*
 * mtcars (hp)
