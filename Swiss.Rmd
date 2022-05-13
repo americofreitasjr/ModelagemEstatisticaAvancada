@@ -3,8 +3,8 @@ title: "Swiss"
 author: 'Grupo: Americo Freitas, Arleks dos Santos e Luciano Ozorio'
 date: '2022-05-08'
 output:
-  pdf_document: default
   html_document: default
+  pdf_document: default
 ---
 
 ```{r setup, include=FALSE}
@@ -69,7 +69,7 @@ summary(modelo)
 ```
 Vamos gerar um novo sumário retirando a variável Examination devido ao seu valor de Pr(>|t|)
 
-Agora todas as variáveis são significativas ( valor de p acima de 5% ) 
+Agora todas as variáveis são significativas (valor de p abaixo de 5% no teste t) 
 O valor de R2 ou coeficiente de explicação da variável resposta pelas variváveis explicativas ainda é menor do que 70% e permaneceu em 0,6707 , próximo de 70% mas ainda moderado. 
 
 ```{r}

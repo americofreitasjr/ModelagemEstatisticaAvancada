@@ -486,10 +486,10 @@ summary(modelo)</code></pre>
 ## F-statistic: 19.76 on 5 and 41 DF,  p-value: 5.594e-10</code></pre>
 <p>Vamos gerar um novo sumário retirando a variável Examination devido
 ao seu valor de Pr(&gt;|t|)</p>
-<p>Agora todas as variáveis são significativas ( valor de p acima de 5%
-) O valor de R2 ou coeficiente de explicação da variável resposta pelas
-variváveis explicativas ainda é menor do que 70% e permaneceu em 0,6707
-, próximo de 70% mas ainda moderado.</p>
+<p>Agora todas as variáveis são significativas (valor de p abaixo de 5%
+no teste t) O valor de R2 ou coeficiente de explicação da variável
+resposta pelas variváveis explicativas ainda é menor do que 70% e
+permaneceu em 0,6707 , próximo de 70% mas ainda moderado.</p>
 <pre class="r"><code>modelo2 &lt;- lm(Fertility ~ Agriculture +  Education + Catholic + Infant.Mortality, swiss)
 summary(modelo2)</code></pre>
 <pre><code>## 
@@ -581,7 +581,7 @@ variáveis explicativas.</p>
 coeficientes de inclinação são simultaneamente iguais a zero, indicando
 se há relação significante da variável dependente com o conjunto de
 variáveis independentes, ou seja a significância total do modelo i.e. se
-há algum B i≠ 0.</p>
+há algum B i diferente de 0.</p>
 <p>O modelo está adequado globalmente pois p-value em 1.484e-11 (menor
 do que 5%) e o R quadrado ajustado ou coeficiente de explicação está com
 71%;</p>
