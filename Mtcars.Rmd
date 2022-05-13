@@ -1,8 +1,10 @@
 ---
 title: "mtcars"
-author: "Americo Freitas"
+author: 'Grupo: Americo Freitas, Arleks dos Santos e Luciano Ozorio'
 date: '2022-04-30'
-output: html_document
+output:
+  pdf_document: default
+  html_document: default
 ---
 
 ```{r setup, include=FALSE}
