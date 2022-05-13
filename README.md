@@ -4,7 +4,7 @@
 
 **Professor: Paulo Maranhão** 
 
-**Alunos: Americo Freitas, Arleks dos Santos e Luciano Ozorio **
+**Alunos: Americo Freitas, Arleks dos Santos e Luciano Ozorio**
 
 **Prazo: 08/05/2022** 
 
