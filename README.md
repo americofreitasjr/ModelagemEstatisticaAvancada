@@ -55,6 +55,8 @@ O melhor modelo linear é: **PROD = 1,64 + 2,91 BALGR + 1,32 REII + 1,99 VALU -2
 
 **b)** Quais fatores afetam a variável resposta?
 
+Todas as variáveis explicativas.
+
 **b)** O modelo é adequado para estimar um valor futuro da variável resposta?
 
 Sim, o modelo gerou uma estimativa para a variável resposta.
