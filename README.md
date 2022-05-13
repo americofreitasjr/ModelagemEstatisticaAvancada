@@ -49,15 +49,22 @@ grupo de países (ex: União Europeia, G20, países não membros da OECD, etc) e
 
 **a)** Usando o R determine o melhor modelo linear possível para a estimar o valor médio da variável resposta. Proponha quaisquer transformações que achar necessário para melhorar o ajuste do modelo.
 
-O melhor modelo linear é: **PROD = 1,64 + 2,91 BALGR + 1,32 REII + 1,99 VALU -2,91 FFD_DVA +2,91 DFD_FVA -3,33 CONS_VA -1,25 EXGR_SERV_FVASH +2,78 IMGRINT_REII -1,74 IMGR_DVASH -7,44 VALU_FFDDVA -2,55 PROD_VASH -5,79 FEXDVAPSH.
+O melhor modelo linear é: **PROD = 1,64 + 2,91 BALGR + 1,32 REII + 1,99 VALU -2,91 FFD_DVA +2,91 DFD_FVA -3,33 CONS_VA -1,25 EXGR_SERV_FVASH +2,78 IMGRINT_REII -1,74 IMGR_DVASH -7,44 VALU_FFDDVA -2,55 PROD_VASH -5,79 FEXDVAPSH.**
 
 **b)** Quais fatores afetam a variável resposta?
 
 **b)** O modelo é adequado para estimar um valor futuro da variável resposta?
 
+Sim, o modelo gerou uma estimativa para a variável resposta.
+
 **c)** Os pressupostos dos modelos foram atendidos? Apresente os resultados graficamente e analiticamente (testes formais) comprovando se as suposições foram satisfeitas.
 
+Sim.
+
 **d)** Utilize uma parte dos dados para gerar previsões e intervalos de confiança. É possível dizer que o modelo foi bem ajustado?
+
+Como o ajuste não foi passou por todos os pressupostos, significa que o modelo não fará uma previsão
+confiável, porém, segue uma simulação de previsão e intervalo de confiança.
 
 * **Obs1:** A análise deve ser feita em forma de relatório e deve ser enviada obrigatoriamente para a pasta “Trabalho de Modelagem Estatística” que se encontra
 dentro da aba Entrega de Atividades do E-Class. Quaisquer dúvidas sobre o trabalho podem ser encaminhadas para o e-mail maranhao@ime.eb.br.
